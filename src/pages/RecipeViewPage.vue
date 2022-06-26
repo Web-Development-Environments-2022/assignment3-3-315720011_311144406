@@ -25,8 +25,8 @@
           <div class="wrapped">
             Instructions:
             <ol>
-              <li v-for="s in recipe._instructions" :key="s.number">
-                {{ s.step }}
+              <li v-for="instruction in recipe.analyzedInstructions" :key="instruction.number">
+                  {{instruction.step}}
               </li>
             </ol>
           </div>
@@ -56,10 +56,7 @@ export default {
       try {
         response = await this.axios.get(
           // "https://test-for-3-2.herokuapp.com/recipes/info",
-          this.$root.store.server_domain + "/recipes/info",
-          {
-            params: { id: this.$route.params.recipeId }
-          }
+          "http://localhost:3000" + "/recipes/information/" + this.$route.params.recipeId
         );
 
         // console.log("response.status", response.status);
@@ -78,18 +75,20 @@ export default {
         readyInMinutes,
         image,
         title
-      } = response.data.recipe;
+      } = response.data;
 
-      let _instructions = analyzedInstructions
-        .map((fstep) => {
-          fstep.steps[0].step = fstep.name + fstep.steps[0].step;
-          return fstep.steps;
-        })
-        .reduce((a, b) => [...a, ...b], []);
+
+      analyzedInstructions = analyzedInstructions.steps;
+
+      // let _instructions = analyzedInstructions
+      //   .map((fstep) => {
+      //     fstep.steps[0].step = fstep.name + fstep.steps[0].step;
+      //     return fstep.steps;
+      //   })
+      //   .reduce((a, b) => [...a, ...b], []);
 
       let _recipe = {
         instructions,
-        _instructions,
         analyzedInstructions,
         extendedIngredients,
         aggregateLikes,

@@ -1,21 +1,25 @@
 <template>
-  <router-link
-    :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-    class="recipe-preview"
-  >
-    <div class="recipe-body">
-      <img v-if="image_load" :src="recipe.image" class="recipe-image" />
+
+  <div class="card">
+    <img v-if="image_load" :src="recipe.image" class="card-img-top" />
+    <div class="card-body">
+      <h5 class="card-title">{{ recipe.title }}</h5>
     </div>
-    <div class="recipe-footer">
-      <div :title="recipe.title" class="recipe-title">
-        {{ recipe.title }}
-      </div>
-      <ul class="recipe-overview">
-        <li>{{ recipe.readyInMinutes }} minutes</li>
-        <li>{{ recipe.aggregateLikes }} likes</li>
-      </ul>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Cooking Time: {{recipe.readyInMinutes}}</li>
+      <li class="list-group-item">Popularity: {{recipe.popularity}}</li>
+      <li class="list-group-item">
+       <p >Vegan: {{recipe.vegan | boolToYesNo}}</p>  
+       <p >Vegetarian: {{recipe.vegetarian | boolToYesNo}}</p>
+       <p >Gluten Free: {{recipe.glutenFree | boolToYesNo}}</p>
+      </li>
+    </ul>
+    <div class="card-footer" style="bottom=0">
+      <router-link  class="card-link" :to="{ name: 'recipe', params: { recipeId: recipe.id } }" >Show Recipe</router-link>
+      <router-link  class="card-link" :to="{ name: 'login' }">Add To Favorites</router-link>
     </div>
-  </router-link>
+  </div>
+
 </template>
 
 <script>
@@ -34,7 +38,7 @@ export default {
     recipe: {
       type: Object,
       required: true
-    }
+    },
 
     // id: {
     //   type: Number,
@@ -57,8 +61,19 @@ export default {
     //   required: false,
     //   default() {
     //     return undefined;
-    //   }
+      // }
     // }
+  },
+  methods: {
+    async addToFavorites() {
+
+      
+    }
+  },
+  filters:{
+    boolToYesNo: function(bool){
+      return bool ? "Yes" : "No"
+    }
   }
 };
 </script>
