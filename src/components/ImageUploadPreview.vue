@@ -10,6 +10,7 @@
             @input="pickFile"
         ></b-form-file>
     </div>
+    
 
 </template>
 
@@ -36,6 +37,10 @@ export default {
             reader.readAsDataURL(file[0])
             this.$emit('input', file[0])
             }
+        },
+        reset(){
+            this.previewImage = null;
+            this.$refs.fileInput.reset();
         }
     }
 }
