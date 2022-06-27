@@ -4,7 +4,7 @@
     <RecipePreviewList title="Random Recipes" class="RandomRecipes center" />
     <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
     <RecipePreviewList
-      title="Last Viewed Recipes"
+      title="Your Last Viewed Recipes"
       :class="{
         RandomRecipes: true,
         blur: !$root.store.username,

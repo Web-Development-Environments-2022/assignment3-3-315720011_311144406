@@ -2,7 +2,7 @@
   <div id="app">
 
     <b-navbar toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="#">NavBar</b-navbar-brand>
+      <b-navbar-brand href="#" >Eat Well</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -23,7 +23,7 @@
         <!-- Whene Logged Out -->
         <b-navbar-nav class="ml-auto" v-if="!$root.store.username">
           <b-navbar-brand >Guest</b-navbar-brand>
-          <b-nav-item :to="{ name: 'register' }"> Register </b-nav-item>
+          <b-nav-item  :to="{ name: 'register' }"> Register </b-nav-item>
           <b-nav-item :to="{ name: 'login' }"> Login </b-nav-item>
         </b-navbar-nav>
 
@@ -33,8 +33,9 @@
             <template #button-content>
               <em><b> {{ $root.store.username }}</b></em>
             </template>
-            <b-dropdown-item href="#">My Recipes</b-dropdown-item>
-            <b-dropdown-item href="#">My Favorites</b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'myRecipes' }">My Recipes</b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'createRecipe' }">Create Recipe</b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'favorites' }">My Favorites</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item @click="Logout">Logout</b-dropdown-item>
           </b-nav-item-dropdown>
