@@ -13,12 +13,13 @@
                 v-model="$v.form.title.$model"
                 type="text"
                 :state="validateState('title')"
+                style="max-width: 300px"
             ></b-form-input>
             <b-form-invalid-feedback v-if="!$v.form.title.required">
                 Title is required
             </b-form-invalid-feedback>
-            <b-form-invalid-feedback v-if="!$v.form.title.alpha">
-                Title has to contain letters only
+            <b-form-invalid-feedback v-if="!$v.form.title.maxLength">
+                Too Long
             </b-form-invalid-feedback>
         </b-form-group>
 
@@ -34,11 +35,8 @@
                 step="5"
                 id="readyInMinutes"
                 v-model="$v.form.readyInMinutes.$model"
-                :state="validateState('readyInMinutes')"
+                style="max-width: 300px"
             ></b-form-spinbutton>
-            <b-form-invalid-feedback>
-            Time is required
-            </b-form-invalid-feedback>
         </b-form-group>
 
         <b-form-group
@@ -53,11 +51,8 @@
                 step="1"
                 id="servings"
                 v-model="$v.form.servings.$model"
-                :state="validateState('servings')"
+                style="max-width: 300px"
             ></b-form-spinbutton>
-            <b-form-invalid-feedback>
-            Time is required
-            </b-form-invalid-feedback>
         </b-form-group>
 
         <b-form-group
@@ -76,6 +71,9 @@
             <b-form-invalid-feedback v-if="!$v.form.instructions.required">
                 Instructions are required
             </b-form-invalid-feedback>
+            <b-form-invalid-feedback v-if="!$v.form.instructions.maxLength">
+                Too Long
+            </b-form-invalid-feedback>
         </b-form-group>
 
         <b-form-group
@@ -88,25 +86,26 @@
             <div v-for="(ingredientAmount, index) in $v.form.ingredientsNameAmount.$each.$iter"
                 :key="index"
                 class="input-group"
+                style="max-width: 500px"
                 >
 
                 <b-form-input 
-                    v-model="ingredientAmount.ingredient.$model"
+                    v-model="ingredientAmount.name.$model"
                     type="text"
-                    placeholder="ingredient"
-                    :state="validateNameAmountState(index, 'ingredient')"  
+                    placeholder="name"
+                    :state="validateNameAmountState(index, 'name')"  
                 ></b-form-input>
                 <b-form-input
                     v-model="ingredientAmount.amount.$model"
-                    type="number"
+                    type="text"
                     placeholder="amount"
                     :state="validateNameAmountState(index, 'amount')"  
                 ></b-form-input>
-                <b-form-invalid-feedback v-if="!ingredientAmount.amount.maxValue">
-                    Amount too High
+                <b-form-invalid-feedback v-if="!ingredientAmount.name.required | !ingredientAmount.amount.required">
+                    Blank input
                 </b-form-invalid-feedback>
-                <b-form-invalid-feedback v-if="!ingredientAmount.ingredient.required">
-                    Blank Ingredient
+                <b-form-invalid-feedback v-if="!ingredientAmount.name.maxLength | !ingredientAmount.amount.maxLength">
+                    Too Long
                 </b-form-invalid-feedback>
             </div>
             <b-button @click="addIngradiant" >Add Ingradiant</b-button>
@@ -127,9 +126,11 @@
             label="Labels:"
             label-for="labels"
         >
-            <b-form-checkbox id="vegan" v-model="$v.form.vegan.$model">Vegan</b-form-checkbox>
-            <b-form-checkbox id="vegetarian" v-model="$v.form.vegetarian.$model">Vegetarian</b-form-checkbox>
-            <b-form-checkbox id="gluten_free" v-model="$v.form.gluten_free.$model">Gluten Free</b-form-checkbox>
+            <div class="input-group">
+                <b-form-checkbox style="margin-right: 50px" id="vegan" v-model="$v.form.vegan.$model"> Vegan </b-form-checkbox>
+                <b-form-checkbox style="margin-right: 50px" id="vegetarian" v-model="$v.form.vegetarian.$model"> Vegetarian </b-form-checkbox>
+                <b-form-checkbox style="margin-right: 50px" id="gluten_free" v-model="$v.form.gluten_free.$model"> Gluten Free </b-form-checkbox>
+            </div>
         </b-form-group>
 
         <b-button type="reset" variant="danger" class="ml-5 w-25" >Reset</b-button>
@@ -152,10 +153,7 @@
 import ImageUploadPreview from '../components/ImageUploadPreview.vue';
 import {
   required,
-  minLength,
-  maxValue,
-  minValue,
-  alpha,
+  maxLength,
   integer
 } from "vuelidate/lib/validators";
 
@@ -177,7 +175,7 @@ export default {
         servings: 1,
         ingredientsNameAmount: [
             {
-            ingredient: "",
+            name: "",
             amount: ""
             }
         ],
@@ -191,7 +189,7 @@ export default {
     form: {
       title: {
         required,
-        alpha
+        maxLength: maxLength(50)
       },
       readyInMinutes: {
         integer,
@@ -207,29 +205,27 @@ export default {
       },
       instructions: {
         required,
+        maxLength: maxLength(600)
       },
       servings: {
         integer
       },
       ingredientsNameAmount: {
         required,
-        minLength: minLength(1),
         $each: {
-            ingredient: {
+            name: {
                 required,
+                maxLength: maxLength(30)
             },
             amount: {
                 required,
-                integer,
-                minValue: minValue(1),
-                maxValue: maxValue(30)
+                maxLength: maxLength(30)
             }
         }
     }
     }
   },
   mounted() {
-    // this.form.ingredientsNameAmount.push({ingredient: "", amount: ""});
   },
   methods: {
     validateState(param) {
@@ -238,28 +234,28 @@ export default {
     },
     validateNameAmountState(index, param) {
         let ind = parseInt(index);
-        if(param === 'amount'){
-            console.log(this.$v.form.ingredientsNameAmount.$each.$iter)
-            const { $dirty, $error } = this.$v.form.ingredientsNameAmount.$each.$iter[ind][param];
-            return $dirty ? !$error : null;
-        }
-        else{
-            console.log(this.$v.form.ingredientsNameAmount.$each.$iter[ind])
-            const { $dirty, $error } = this.$v.form.ingredientsNameAmount.$each.$iter[ind][param];
-            return $dirty ? !$error : null;
-        }
+        const { $dirty, $error } = this.$v.form.ingredientsNameAmount.$each.$iter[ind][param];
+        return $dirty ? !$error : null;
 
     },
     async Create() {
       try {
         const response = await this.axios.post(
-          "http://localhost:3000" + "/user/createrecipe",
-
-          {
-
-          }
+            this.$root.store.server_domain + "/users/createrecipe",
+            {
+                title: this.form.title,
+                readyInMinutes: this.form.readyInMinutes,
+                image: this.form.image,
+                vegan: this.form.vegan,
+                vegetarian: this.form.vegetarian,
+                gluten_free: this.form.gluten_free,
+                instructions: this.form.instructions,
+                servings: this.form.servings,
+                ingredientsNameAmount: this.form.ingredientsNameAmount,
+            },
+            {withCredentials: true},
         );
-        this.$router.push("/login");
+
       } catch (err) {
         console.log(err.response);
         this.form.submitError = err.response.data.message;
@@ -284,7 +280,7 @@ export default {
             servings: 1,
             ingredientsNameAmount: [
                 {
-                ingredient: "",
+                name: "",
                 amount: ""
                 }
             ],
@@ -297,13 +293,13 @@ export default {
         });
     },
     addIngradiant(){
-        this.form.ingredientsNameAmount.push({ingredient: "", amount: ""});
+        this.form.ingredientsNameAmount.push({name: "", amount: ""});
     },
   }
 };
 </script>
 <style lang="scss" scoped>
     .container {
-        max-width: 500px;
+        max-width: 750;
     }   
 </style>

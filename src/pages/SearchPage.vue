@@ -144,7 +144,7 @@ export default {
 
     async search() {
       try {
-        let url = "http://localhost:3000" + "/search?query=" + this.form.query;
+        let url = this.$root.store.server_domain + "/search?query=" + this.form.query;
         if(this.form.resultNumber != 5){
           url += "&number=" + this.form.resultNumber;
         }
@@ -157,14 +157,15 @@ export default {
         if(this.form.intolerance != null){
           url += "&intolerance=" + this.form.intolerance;
         }
-        const response = await this.axios.get(url,
-          // "https://test-for-3-2.herokuapp.com/recipes/random"
+        
+        const response = await this.axios.get(
+          url,
+          {withCredentials: true},
         );
 
         const searchResults = response.data;
         this.recipes = [];
         this.recipes.push(...searchResults);
-        console.log(this.recipes[0]);
 
       } catch (error) {
         console.log(error);
