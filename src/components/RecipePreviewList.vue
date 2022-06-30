@@ -5,7 +5,10 @@
       <slot></slot>
     </h3>
     <div class="card-deck">
-        <RecipePreview v-for="r in recipes" :key="r.id" class="recipePreview" :recipe="r" />
+        <RecipePreview v-for="r in recipes" :key="r.id" 
+        class="recipePreview"
+        :showFavorite="showFavorite"
+        :recipe="r" />
     </div>
   </b-container>
 </template>
@@ -21,7 +24,8 @@ export default {
     title: {
       type: String,
       required: true
-    }
+    },
+    showFavorite: Boolean
   },
   data() {
     return {
@@ -29,23 +33,12 @@ export default {
     };
   },
   mounted() {
-    this.updateRecipes();
+
   },
   methods: {
-    async updateRecipes() {
-      try {
-        const response = await this.axios.get(
-          this.$root.store.server_domain + "/recipes/random",
-          {withCredentials: true},
-        );
-
-        const three_recipes = response.data;
-        this.recipes = [];
-        this.recipes.push(...three_recipes);
-
-      } catch (error) {
-        console.log(error);
-      }
+    updateRecipes(recipes) {
+      console.log(recipes)
+      this.recipes = recipes;
     }
   }
 };

@@ -90,6 +90,27 @@
         </b-form-invalid-feedback>
       </b-form-group>
 
+      <b-form-group
+        id="input-group-email"
+        label-cols-sm="3"
+        label="Email:"
+        label-for="email"
+      >
+        <b-form-input
+          id="email"
+          type="email"
+          v-model="$v.form.email.$model"
+          :state="validateState('email')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.email.email">
+          Invalid Email
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-if="!$v.form.email.required">
+          Email is required
+        </b-form-invalid-feedback>
+
+      </b-form-group>
+
       <b-button type="reset" variant="danger">Reset</b-button>
       <b-button
         type="submit"
@@ -156,6 +177,16 @@ export default {
         length: (u) => minLength(3)(u) && maxLength(8)(u),
         alpha
       },
+      firstName: {
+        required,
+        length: (u) => minLength(1)(u) && maxLength(30)(u),
+        alpha
+      },
+      lastName: {
+        required,
+        length: (u) => minLength(1)(u) && maxLength(30)(u),
+        alpha
+      },
       country: {
         required
       },
@@ -166,13 +197,16 @@ export default {
       confirmedPassword: {
         required,
         sameAsPassword: sameAs("password")
-      }
+      },
+      email: {
+        required,
+        email,
+        maxLength: maxLength(50),
+      },
     }
   },
   mounted() {
-    // console.log("mounted");
     this.countries.push(...countries);
-    // console.log($v);
   },
   methods: {
     validateState(param) {
@@ -185,7 +219,8 @@ export default {
           this.$root.store.server_domain + "/Register",
           {
             username: this.form.username,
-            password: this.form.password
+            password: this.form.password,
+            country: this.form.country,
           },
           {withCredentials: true}
         );
@@ -222,6 +257,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .container {
-  max-width: 500px;
+  max-width: 750px;
 }
 </style>

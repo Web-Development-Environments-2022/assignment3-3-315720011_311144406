@@ -137,46 +137,28 @@ export default {
     this.intolerances.push(...intolerances);
     this.resultNumbersOptions.push(...["5", "10", "15"]);
   },
+
   methods: {
     showResults(){
       return this.recipes.length > 0;
     },
 
-    async search() {
-      try {
-        let url = this.$root.store.server_domain + "/search?query=" + this.form.query;
-        if(this.form.resultNumber != 5){
-          url += "&number=" + this.form.resultNumber;
-        }
-        if(this.form.cuisine != null){
-          url += "&cuisine=" + this.form.cuisine;
-        }
-        if(this.form.diet != null){
-          url += "&diets=" + this.form.diet;
-        }
-        if(this.form.intolerance != null){
-          url += "&intolerance=" + this.form.intolerance;
-        }
-        
-        const response = await this.axios.get(
-          url,
-          {withCredentials: true},
-        );
-
-        const searchResults = response.data;
-        this.recipes = [];
-        this.recipes.push(...searchResults);
-
-      } catch (error) {
-        console.log(error);
-      }
-    },
     onSearch() {
       if(this.form.query === ""){
         return
       }
       else{
-        this.search();
+        this.$router.push(
+          { 
+            name: 'searchResults',
+            params: {
+              query: this.form.query,
+              resultNumber: this.form.resultNumber,
+              cuisine: this.form.cuisine,
+              diet: this.form.diet,
+              intolerance: this.form.intolerance
+            }
+          });
       }
     }
   }
@@ -184,15 +166,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.RandomRecipes {
-  margin: 10px 0 10px;
-}
-.blur {
-  -webkit-filter: blur(5px); /* Safari 6.0 - 9.0 */
-  filter: blur(2px);
-}
-::v-deep .blur .recipe-preview {
-  pointer-events: none;
-  cursor: default;
-}
+
 </style>

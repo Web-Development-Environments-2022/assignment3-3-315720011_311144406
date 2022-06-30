@@ -15,15 +15,23 @@
       </li>
     </ul>
     <div class="card-footer" style="bottom=0">
-      <router-link  class="card-link" :to="{ name: 'recipe', params: { recipeId: recipe.id } }" >Show Recipe</router-link>
-      <router-link  class="card-link" :to="{ name: 'login' }">Add To Favorites</router-link>
+      <b-button class="card-link" :to="{ name: 'recipe', params: { recipeId: recipe.id } }" type="submit">Show Recipe</b-button>
+      <ToggleFavorite 
+        id="favo"
+        v-if="this.showFavorite"
+        @toggle="(favorited) => addToFavorites(favorited)" 
+        :favorited="recipe.favorited"/>
     </div>
   </div>
 
 </template>
 
 <script>
+import ToggleFavorite from "./ToggleFavorite";
 export default {
+  components: {
+    ToggleFavorite
+  },
   mounted() {
     this.axios.get(this.recipe.image).then((i) => {
       this.image_load = true;
@@ -39,35 +47,39 @@ export default {
       type: Object,
       required: true
     },
+    showFavorite: {
+      type: Boolean,
+    }
 
-    // id: {
-    //   type: Number,
-    //   required: true
-    // },
-    // title: {
-    //   type: String,
-    //   required: true
-    // },
-    // readyInMinutes: {
-    //   type: Number,
-    //   required: true
-    // },
-    // image: {
-    //   type: String,
-    //   required: true
-    // },
-    // aggregateLikes: {
-    //   type: Number,
-    //   required: false,
-    //   default() {
-    //     return undefined;
-      // }
-    // }
   },
   methods: {
-    async addToFavorites() {
+    async addToFavorites(favorited) {
+      try {
+        console.log("here");
+        if(favorited){
+          const response = await this.axios.post(
+            this.$root.store.server_domain + "/users/favorites",
+            {
+              recipeId: this.recipe.id,
+            },
+            {withCredentials: true}
+          );
+          
+        } else{
+          const response = await this.axios.post(
+            this.$root.store.server_domain + "/users/favorites/remove",
+            {
+              recipe_id: this.recipe.id,
+            },
+            {withCredentials: true}
+          );
 
-      
+          // this.$router.push("/users/favorites");
+        }
+
+      } catch (err) {
+        console.log(err.response);
+      }      
     }
   },
   filters:{
@@ -153,4 +165,14 @@ export default {
   display: table-cell;
   text-align: center;
 }
+
+#favo{
+  margin-left: 120px;
+  background: none;
+  border: none;
+  padding: 0;
+  outline: inherit;
+  cursor: pointer;
+}
+
 </style>

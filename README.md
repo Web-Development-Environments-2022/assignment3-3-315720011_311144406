@@ -3,7 +3,6 @@
 
 
 # TODO:
-fix quick search
 
 
 Last Viewed Recipes
@@ -11,15 +10,22 @@ Last Viewed Recipes
 
 
 My Recipes:
-- fix times
-- add free text for instructions
-- add adjustable list for ingrediants
-
-
-
-Familiy Recipes
+- fix images saving
+- 
 
 
 
 
-My Favorites
+
+
+Familiy Recipes:
+- create the recipies
+- show them regulary 
+- a little css
+
+
+
+
+My Favorites:
+- add 
+- add 
