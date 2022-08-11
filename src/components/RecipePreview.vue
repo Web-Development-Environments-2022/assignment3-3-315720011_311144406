@@ -108,7 +108,7 @@ export default {
   },
   computed: {
     seenColor(){
-      return this.recipe.watched ? "DarkGray" : "DarkCyan"
+      return this.$root.viewed.includes(this.recipe.id) ? "DarkGray" : "DarkCyan"
     }
   }
 };
@@ -122,7 +122,11 @@ export default {
 }
 
 .myTitle{
+  height: 10vh;
   padding: 2vh;
+  padding-left: 1vh ;
+  padding-right: 1vh ;
+  font-weight: bold;
   border-bottom: 1px;
   border-bottom-style: solid;
   border-color:black;

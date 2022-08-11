@@ -2,26 +2,40 @@
   <b-container fluid>
   <b-row>
     <b-col cols=7>
-      <h1 class="title">Main Page</h1>
+
       <RecipePreviewList 
       title="Random Recipes" 
       :showFavorite ="$root.store.username != null"
       class="RandomRecipes center" 
       ref="recipesList" />
+
+      <b-button 
+        pill variant="primary"
+        class="changeCard" 
+        @click="updateRecipes()" 
+        type="submit"
+        > Change Recipes
+      </b-button>
     </b-col>
     <b-col cols=4>
-    <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
-    <RecipePreviewList
-      title="Your Lasst Viewed Recipes"
-      :showFavorite ="$root.store.username != null"
-      :class="{
-        RandomRecipes: true,
-        blur: !$root.store.username,
-        center: true
-      }"
-      ref="lastViewed" 
-      disabled
-    ></RecipePreviewList>
+      <LoginComponent
+        v-if="!$root.store.username"
+        class="login"
+      ></LoginComponent>
+      <RecipePreviewList 
+        v-if="$root.store.username"
+        title="Your Last Viewed Recipes"
+        :showFavorite ="$root.store.username != null"
+        :class="{
+          RandomRecipes: true,
+          blur: !$root.store.username,
+          center: true
+        }"
+        ref="lastViewed" 
+        disabled
+      ></RecipePreviewList>
+
+
     </b-col>
   </b-row>
 </b-container>
@@ -29,9 +43,11 @@
 
 <script>
 import RecipePreviewList from "../components/RecipePreviewList";
+import LoginComponent from "../components/LoginComponent";
 export default {
   components: {
-    RecipePreviewList
+    RecipePreviewList,
+    LoginComponent
   },
   mounted() {
     this.updateRecipes();
@@ -39,7 +55,7 @@ export default {
   methods: {
     async updateRecipes() {
       try {
-        const response = await this.axios.get(
+        let response = await this.axios.get(
           this.$root.store.server_domain + "/recipes/random",
           {withCredentials: true},
         );
@@ -51,16 +67,20 @@ export default {
         });
 
         //last viewed
-        response = await this.axios.get(
-          this.$root.store.server_domain + "/recipes/random",
-          {withCredentials: true},
-        );
-        three_recipes = response.data;
-        recipes = [];
-        recipes.push(...three_recipes);
-        this.$nextTick(() => {
-            this.$refs.lastViewed.updateRecipes(recipes);
-        });
+        if(this.$root.store.username){
+          response = await this.axios.post(
+            this.$root.store.server_domain + "/users/viewed",
+            {three_recipes: this.$root.viewed.splice(-3)},
+            {withCredentials: true},
+          );
+          let veiwedRecipes = response.data;
+          recipes = [];
+          recipes.push(...veiwedRecipes);
+          this.$nextTick(() => {
+              this.$refs.lastViewed.updateRecipes(recipes);
+          });
+        }
+
       } catch (error) {
         console.log(error);
       }
@@ -81,5 +101,15 @@ export default {
 ::v-deep .blur .recipe-preview {
   pointer-events: none;
   cursor: default;
+}
+.changeCard{
+  position: relative;
+  padding: 2%;
+  margin: 2%;
+  left: 38%;
+}
+.login{
+  position: relative;
+  top: 10vh;
 }
 </style>

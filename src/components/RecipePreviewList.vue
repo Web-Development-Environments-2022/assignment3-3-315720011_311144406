@@ -1,8 +1,7 @@
 <template>
   <b-container>
-    <h3>
-      {{ title }}:
-      <slot></slot>
+    <h3 class="title">
+      {{ titleExsits }}:
     </h3>
     <b-card-group class="card-deck">
         <RecipePreview v-for="r in recipes" :key="r.id" 
@@ -39,12 +38,28 @@ export default {
     updateRecipes(recipes) {
       this.recipes = recipes;
     }
+  },
+  computed: {
+    titleExsits() {
+      if(this.recipes){
+        return this.recipes.length == 0 ? "No Recipes" : this.title;
+      }
+      else{
+        return "No Recipes";
+      }
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.container {
-  min-height: 400px;
-}
+  .title{
+    padding: 4%;
+    position: relative;
+    left: 30%;
+  }
+
+  .container {
+    min-height: 400px;
+  }
 </style>

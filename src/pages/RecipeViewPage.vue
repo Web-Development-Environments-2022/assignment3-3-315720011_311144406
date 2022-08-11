@@ -98,6 +98,7 @@ export default {
       };
 
       this.recipe = _recipe;
+      this.$root.viewed.push(this.recipe.id);
     } catch (error) {
       console.log(error);
     }
