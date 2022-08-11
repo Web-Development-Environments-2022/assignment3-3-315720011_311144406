@@ -20,7 +20,14 @@
       </li>
     </ul>
     <div class="card-footer" style="bottom=0">
-      <b-button class="card-link" @click="showRecipe()" type="submit">Show Recipe</b-button>
+      <b-button 
+        class="card-link" 
+        @click="showRecipe()" 
+        type="submit"
+        style="background-color="
+        :style="{'background-color':seenColor}"
+      >Show Recipe
+      </b-button>
       <ToggleFavorite 
         id="favo"
         v-if="this.showFavorite"
@@ -94,6 +101,13 @@ export default {
   filters:{
     boolToYesNo: function(bool){
       return bool ? "Yes" : "No"
+    },
+
+
+  },
+  computed: {
+    seenColor(){
+      return this.recipe.watched ? "DarkGray" : "DarkCyan"
     }
   }
 };
