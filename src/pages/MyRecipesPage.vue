@@ -2,9 +2,11 @@
   <div class="container">
     <h1 class="title">My Recipes</h1>
     <div v-if="recipesExist">
-        <RecipePreviewList title="My Recipes" 
-        class="MyRecipes center"
-        ref="recipesList"/>
+        <RecipePreviewList 
+          title="My Recipes" 
+          class="MyRecipes center"
+          ref="recipesList"
+        />
     </div>
     <div v-else>
         <h2 class="title">You haven't liked any recipes yet, look around and find some</h2>

@@ -3,10 +3,10 @@
     <h1 class="title">My Favorites</h1>
     <div v-if="recipesExist">
         <RecipePreviewList 
-        showFavorite
-        title="My Favorites" 
-        class="MyFavorites center" 
-        ref="recipesList"/>
+          title="My Favorites" 
+          class="MyFavorites center" 
+          ref="recipesList"
+        />
     </div>
     <div v-else>
         <h2 class="title">You haven't liked any recipes yet, look around and find some</h2>

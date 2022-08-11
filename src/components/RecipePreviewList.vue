@@ -37,7 +37,6 @@ export default {
   },
   methods: {
     updateRecipes(recipes) {
-      console.log(recipes)
       this.recipes = recipes;
     }
   }

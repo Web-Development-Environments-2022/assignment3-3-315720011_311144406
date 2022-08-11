@@ -4,7 +4,7 @@
       class="toggle-favorite__icon"
       :class="iconClasses"
       @animationend.native="onIconAnimationEnds"
-      favorited="favorited"
+      :favorited="favorited"
     />
     <transition name="favorite-particles-transition">
       <div v-if="animating" class="toggle-favorite__particles"></div>

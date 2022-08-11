@@ -69,7 +69,7 @@ export default {
           const response = await this.axios.post(
             this.$root.store.server_domain + "/users/favorites/remove",
             {
-              recipe_id: this.recipe.id,
+              recipeId: this.recipe.id,
             },
             {withCredentials: true}
           );

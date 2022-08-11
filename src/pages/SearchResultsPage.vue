@@ -9,7 +9,11 @@
     <h1 class="title">Search Results</h1>
     <div class="row row-cols-1 row-cols-md-2">
       <div class="col mb-4" v-for="r in recipes" :key="r.id">
-          <RecipePreview class="recipePreview" :recipe="r" />
+          <RecipePreview 
+            class="recipePreview" 
+            :recipe="r" 
+            :showFavorite ="$root.store.username != null"
+          />
       </div>
     </div>
     </div>

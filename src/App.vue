@@ -8,7 +8,7 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item :to="{ name: 'main' }"> Vue Recipes </b-nav-item>
+          <b-nav-item :to="{ name: 'main' }"> View Recipes </b-nav-item>
           <b-nav-item :to="{ name: 'search' }"> Search </b-nav-item>
         </b-navbar-nav> 
 
@@ -16,7 +16,7 @@
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
             <b-form-input v-model="query" size="sm" class="mr-sm-2" placeholder="Quick Search"></b-form-input>
-            <b-button  @click="search" size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
+            <b-button  @click="search()" size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
           </b-nav-form>
         </b-navbar-nav>
 
@@ -37,7 +37,7 @@
             <b-dropdown-item :to="{ name: 'createRecipe' }">Create Recipe</b-dropdown-item>
             <b-dropdown-item :to="{ name: 'favorites' }">My Favorites</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item @click="Logout">Logout</b-dropdown-item>
+            <b-dropdown-item @click="Logout()">Logout</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
 
@@ -78,14 +78,25 @@ export default {
       }
     },
 
-    Logout() {
-      this.$root.store.logout();
-      this.$root.toast("Logout", "User logged out successfully", "success");
-
-      this.$router.push("/").catch(() => {
-        this.$forceUpdate();
-      });
-    },
+    async Logout() {
+      try {
+        const response = await this.axios.post(
+          this.$root.store.server_domain + "/Logout",
+          {
+          },
+          {withCredentials: true}
+        );
+      } catch (error) {
+        console.log(error);
+      }
+      finally{
+        this.$root.store.logout();
+        this.$root.toast("Logout", "User logged out successfully", "success");
+        this.$router.push("/").catch(() => {
+          this.$forceUpdate();
+        });
+      }
+    }
   }
 };
 </script>

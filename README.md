@@ -7,25 +7,14 @@
 
 Last Viewed Recipes
 
-
-
 My Recipes:
 - fix images saving
-- 
-
-
-
-
-
 
 Familiy Recipes:
 - create the recipies
 - show them regulary 
 - a little css
 
-
-
-
-My Favorites:
-- add 
-- add 
+Recipe:
+- add watched recipe
+- 
