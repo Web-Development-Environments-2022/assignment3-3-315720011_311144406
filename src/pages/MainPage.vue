@@ -1,14 +1,18 @@
 <template>
-  <div class="container">
-    <h1 class="title">Main Page</h1>
-    <RecipePreviewList 
-    title="Random Recipes" 
-    :showFavorite ="$root.store.username != null"
-    class="RandomRecipes center" 
-    ref="recipesList" />
+  <b-container fluid>
+  <b-row>
+    <b-col cols=7>
+      <h1 class="title">Main Page</h1>
+      <RecipePreviewList 
+      title="Random Recipes" 
+      :showFavorite ="$root.store.username != null"
+      class="RandomRecipes center" 
+      ref="recipesList" />
+    </b-col>
+    <b-col cols=4>
     <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
     <RecipePreviewList
-      title="Your Last Viewed Recipes"
+      title="Your Lasst Viewed Recipes"
       :showFavorite ="$root.store.username != null"
       :class="{
         RandomRecipes: true,
@@ -18,7 +22,9 @@
       ref="lastViewed" 
       disabled
     ></RecipePreviewList>
-  </div>
+    </b-col>
+  </b-row>
+</b-container>
 </template>
 
 <script>

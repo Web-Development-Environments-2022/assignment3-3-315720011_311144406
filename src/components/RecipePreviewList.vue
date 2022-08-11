@@ -4,12 +4,12 @@
       {{ title }}:
       <slot></slot>
     </h3>
-    <div class="card-deck">
+    <b-card-group class="card-deck">
         <RecipePreview v-for="r in recipes" :key="r.id" 
         class="recipePreview"
         :showFavorite="showFavorite"
         :recipe="r" />
-    </div>
+    </b-card-group>
   </b-container>
 </template>
 

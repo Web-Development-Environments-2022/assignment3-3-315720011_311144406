@@ -1,41 +1,42 @@
 <template>
-
-  <div class="card">
+  <div class="card" style="padding=0px" >
     <img 
       v-if="image_load" 
       :src="recipe.image" 
       class="card-img-top" 
       style="cursor: pointer;" 
       @click="showRecipe()"/>
-    <div class="card-body">
-      <h5 class="card-title">{{ recipe.title }}</h5>
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">Cooking Time: {{recipe.readyInMinutes}}</li>
-      <li class="list-group-item">Popularity: {{recipe.popularity}}</li>
-      <li class="list-group-item">
-       <p >Vegan: {{recipe.vegan | boolToYesNo}}</p>  
-       <p >Vegetarian: {{recipe.vegetarian | boolToYesNo}}</p>
-       <p >Gluten Free: {{recipe.glutenFree | boolToYesNo}}</p>
-      </li>
-    </ul>
-    <div class="card-footer" style="bottom=0">
-      <b-button 
-        class="card-link" 
-        @click="showRecipe()" 
-        type="submit"
-        style="background-color="
-        :style="{'background-color':seenColor}"
-      >Show Recipe
-      </b-button>
-      <ToggleFavorite 
-        id="favo"
-        v-if="this.showFavorite"
-        @toggle="(favorited) => addToFavorites(favorited)" 
-        :favorited="recipe.favorited"/>
-    </div>
-  </div>
 
+    <div
+      class="myCard"
+      >
+      <h5 class="myTitle text-center ">{{ recipe.title }}</h5>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Cooking Time: {{recipe.readyInMinutes}}</li>
+        <li class="list-group-item">Popularity: {{recipe.popularity}}</li>
+        <li class="list-group-item">
+        <p >Vegan: {{recipe.vegan | boolToYesNo}}</p>  
+        <p >Vegetarian: {{recipe.vegetarian | boolToYesNo}}</p>
+        <p >Gluten Free: {{recipe.glutenFree | boolToYesNo}}</p>
+        </li>
+      </ul>
+      <div class="card-footer" style="bottom=0">
+        <b-button 
+          class="card-link" 
+          @click="showRecipe()" 
+          type="submit"
+          :style="{'background-color':seenColor}"
+        >Show Recipe
+        </b-button>
+        <ToggleFavorite 
+          id="favo"
+          v-if="this.showFavorite"
+          @toggle="(favorited) => addToFavorites(favorited)" 
+          :favorited="recipe.favorited"/>
+    </div>
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -114,9 +115,22 @@ export default {
 </script>
 
 <style scoped>
+.myCard{
+  padding: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.myTitle{
+  padding: 2vh;
+  border-bottom: 1px;
+  border-bottom-style: solid;
+  border-color:black;
+}
 
 #favo{
-  margin-left: 120px;
+  position: absolute;
+  right: 2vw;
   background: none;
   border: none;
   padding: 0;
