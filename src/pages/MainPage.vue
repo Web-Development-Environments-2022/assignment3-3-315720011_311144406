@@ -3,13 +3,13 @@
     <h1 class="title">Main Page</h1>
     <RecipePreviewList 
     title="Random Recipes" 
-    showFavorite
+    :showFavorite ="$root.store.username != null"
     class="RandomRecipes center" 
     ref="recipesList" />
     <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
     <RecipePreviewList
       title="Your Last Viewed Recipes"
-      showFavorite
+      :showFavorite ="$root.store.username != null"
       :class="{
         RandomRecipes: true,
         blur: !$root.store.username,
@@ -61,6 +61,7 @@ export default {
     }
   },
 };
+
 </script>
 
 <style lang="scss" scoped>
