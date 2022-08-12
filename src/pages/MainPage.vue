@@ -67,10 +67,14 @@ export default {
         });
 
         //last viewed
-        if(this.$root.store.username){
+        if(this.$root.store.username && this.$root.viewed && this.$root.viewed.length > 0){
+          const ViewedRecipesIds = await this.$root.viewed;
+          const lastThreeRecipesIds = ViewedRecipesIds.splice(-3);
+          console.log(lastThreeRecipesIds);
+
           response = await this.axios.post(
             this.$root.store.server_domain + "/users/viewed",
-            {three_recipes: this.$root.viewed.splice(-3)},
+            {lastThreeRecipesIds: lastThreeRecipesIds},
             {withCredentials: true},
           );
           let veiwedRecipes = response.data;

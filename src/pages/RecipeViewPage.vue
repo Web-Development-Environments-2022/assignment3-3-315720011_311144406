@@ -68,6 +68,7 @@ export default {
       }
 
       let {
+        id,
         analyzedInstructions,
         instructions,
         extendedIngredients,
@@ -88,6 +89,7 @@ export default {
       //   .reduce((a, b) => [...a, ...b], []);
 
       let _recipe = {
+        id,
         instructions,
         analyzedInstructions,
         extendedIngredients,

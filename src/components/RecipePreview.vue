@@ -25,7 +25,7 @@
           class="card-link" 
           @click="showRecipe()" 
           type="submit"
-          :style="{'background-color':seenColor}"
+          :style="{'background-color':seenColor()}"
         >Show Recipe
         </b-button>
         <ToggleFavorite 
@@ -66,6 +66,13 @@ export default {
 
   },
   methods: {
+
+    async seenColor(){
+      const ViewedRecipesIds = await Promise.all(this.$root.viewed);
+      console.log(ViewedRecipesIds);
+      return ViewedRecipesIds.includes(this.recipe.id) ? "DarkGray" : "DarkCyan"
+    },
+
     async addToFavorites(favorited) {
       try {
         console.log("here");
@@ -106,11 +113,9 @@ export default {
 
 
   },
-  computed: {
-    seenColor(){
-      return this.$root.viewed.includes(this.recipe.id) ? "DarkGray" : "DarkCyan"
-    }
-  }
+
+
+  
 };
 </script>
 

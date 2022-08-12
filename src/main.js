@@ -91,7 +91,7 @@ new Vue({
   data() {
     return {
       store: shared_data,
-      viewed: []
+      viewed: Array()
     };
   },
   methods: {
