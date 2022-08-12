@@ -114,8 +114,6 @@ export default {
     boolToYesNo: function(bool){
       return bool ? "Yes" : "No"
     },
-
-
   },
 
 

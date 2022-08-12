@@ -9,8 +9,16 @@
         <div class="wrapper">
           <div class="wrapped">
             <div class="mb-3">
-              <div>Ready in {{ recipe.readyInMinutes }} minutes</div>
-              <div>Likes: {{ recipe.aggregateLikes }} likes</div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Cooking Time: {{recipe.readyInMinutes}}</li>
+                <li class="list-group-item">Servings: {{recipe.servings}}</li>
+                <li class="list-group-item">Popularity: {{recipe.popularity}}</li>
+                <li class="list-group-item">
+                  <p >Vegan: {{recipe.vegan | boolToYesNo}}</p>  
+                  <p >Vegetarian: {{recipe.vegetarian | boolToYesNo}}</p>
+                  <p >Gluten Free: {{recipe.glutenFree | boolToYesNo}}</p>
+                </li>
+              </ul>
             </div>
             Ingredients:
             <ul>
@@ -72,10 +80,14 @@ export default {
         analyzedInstructions,
         instructions,
         extendedIngredients,
-        aggregateLikes,
+        popularity,
         readyInMinutes,
+        vegan,
+        vegetarian,
+        glutenFree,
         image,
-        title
+        title,
+        servings
       } = response.data;
 
 
@@ -93,10 +105,14 @@ export default {
         instructions,
         analyzedInstructions,
         extendedIngredients,
-        aggregateLikes,
+        popularity,
         readyInMinutes,
+        vegan,
+        vegetarian,
+        glutenFree,
         image,
-        title
+        title,
+        servings
       };
 
       this.recipe = _recipe;
@@ -104,7 +120,12 @@ export default {
     } catch (error) {
       console.log(error);
     }
-  }
+  },
+  filters:{
+    boolToYesNo: function(bool){
+      return bool ? "Yes" : "No"
+    },
+  },
 };
 </script>
 

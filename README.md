@@ -8,6 +8,8 @@ favorite fix like change between watched and random
 
 css watched recipes
 
+css recipes
+
 My Recipes:
 - fix images saving (maybe)
 
