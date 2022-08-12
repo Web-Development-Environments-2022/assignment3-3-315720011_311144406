@@ -11,29 +11,31 @@
       class="myCard"
       >
       <h5 class="myTitle text-center ">{{ recipe.title }}</h5>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Cooking Time: {{recipe.readyInMinutes}}</li>
-        <li class="list-group-item">Popularity: {{recipe.popularity}}</li>
-        <li class="list-group-item">
-        <p >Vegan: {{recipe.vegan | boolToYesNo}}</p>  
-        <p >Vegetarian: {{recipe.vegetarian | boolToYesNo}}</p>
-        <p >Gluten Free: {{recipe.glutenFree | boolToYesNo}}</p>
-        </li>
-      </ul>
-      <div class="card-footer" style="bottom=0">
-        <b-button 
-          class="card-link" 
-          @click="showRecipe()" 
-          type="submit"
-          :style="{'background-color':seenColor()}"
-        >Show Recipe
-        </b-button>
-        <ToggleFavorite 
-          id="favo"
-          v-if="this.showFavorite"
-          @toggle="(favorited) => addToFavorites(favorited)" 
-          :favorited="recipe.favorited"/>
-    </div>
+      <div v-if="!isOnLastViewd">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Cooking Time: {{recipe.readyInMinutes}}</li>
+          <li class="list-group-item">Popularity: {{recipe.popularity}}</li>
+          <li class="list-group-item">
+          <p >Vegan: {{recipe.vegan | boolToYesNo}}</p>  
+          <p >Vegetarian: {{recipe.vegetarian | boolToYesNo}}</p>
+          <p >Gluten Free: {{recipe.glutenFree | boolToYesNo}}</p>
+          </li>
+        </ul>
+        <div class="card-footer" style="bottom=0">
+          <b-button 
+            class="card-link" 
+            @click="showRecipe()" 
+            type="submit"
+            :style="{'background-color':seenColor()}"
+          >Show Recipe
+          </b-button>
+          <ToggleFavorite 
+            id="favo"
+            v-if="this.showFavorite"
+            @toggle="(favorited) => addToFavorites(favorited)" 
+            :favorited="recipe.favorited"/>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -62,6 +64,9 @@ export default {
     },
     showFavorite: {
       type: Boolean,
+    },
+    isOnLastViewd: {
+      type: Boolean
     }
 
   },
@@ -75,7 +80,6 @@ export default {
 
     async addToFavorites(favorited) {
       try {
-        console.log("here");
         if(favorited){
           const response = await this.axios.post(
             this.$root.store.server_domain + "/users/favorites",
@@ -132,9 +136,6 @@ export default {
   padding-left: 1vh ;
   padding-right: 1vh ;
   font-weight: bold;
-  border-bottom: 1px;
-  border-bottom-style: solid;
-  border-color:black;
 }
 
 #favo{

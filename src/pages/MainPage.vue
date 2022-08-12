@@ -25,7 +25,7 @@
       <RecipePreviewList 
         v-if="$root.store.username"
         title="Your Last Viewed Recipes"
-        :showFavorite ="$root.store.username != null"
+        isOnLastViewd
         :class="{
           RandomRecipes: true,
           blur: !$root.store.username,

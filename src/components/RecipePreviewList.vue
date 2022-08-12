@@ -7,6 +7,7 @@
         <RecipePreview v-for="r in recipes" :key="r.id" 
         class="recipePreview"
         :showFavorite="showFavorite"
+        :isOnLastViewd="isOnLastViewd"
         :recipe="r" />
     </b-card-group>
   </b-container>
@@ -24,7 +25,8 @@ export default {
       type: String,
       required: true
     },
-    showFavorite: Boolean
+    showFavorite: Boolean,
+    isOnLastViewd: Boolean
   },
   data() {
     return {
