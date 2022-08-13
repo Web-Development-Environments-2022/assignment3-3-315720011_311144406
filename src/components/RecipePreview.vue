@@ -26,7 +26,7 @@
             class="card-link" 
             @click="showRecipe()" 
             type="submit"
-            :style="{'background-color':seenColor()}"
+            :style="{'background-color': seenColor}"
           >Show Recipe
           </b-button>
           <ToggleFavorite 
@@ -47,15 +47,12 @@ export default {
   components: {
     ToggleFavorite
   },
-  mounted() {
-    this.axios.get(this.recipe.image).then((i) => {
-      this.image_load = true;
-    });
-  },
+
   data() {
     return {
-      image_load: false
+      image_load: false,
     };
+
   },
   props: {
     recipe: {
@@ -68,15 +65,15 @@ export default {
     isOnLastViewd: {
       type: Boolean
     }
-
   },
-  methods: {
 
-    async seenColor(){
-      const ViewedRecipesIds = await Promise.all(this.$root.viewed);
-      console.log(ViewedRecipesIds);
-      return ViewedRecipesIds.includes(this.recipe.id) ? "DarkGray" : "DarkCyan"
-    },
+  async mounted() {
+    this.axios.get(this.recipe.image).then((i) => {
+      this.image_load = true;
+    });
+  },
+
+  methods: {
 
     async addToFavorites(favorited) {
       try {
@@ -116,7 +113,12 @@ export default {
     },
   },
 
-
+  computed: {
+    seenColor(){
+      const viewed = JSON.parse(JSON.stringify(this.$root.viewed));
+      return viewed.includes(parseInt(this.recipe.id)) ? "DarkGray" : "DarkCyan"
+    },
+  }
   
 };
 </script>

@@ -91,7 +91,7 @@ new Vue({
   data() {
     return {
       store: shared_data,
-      viewed: Array()
+      viewed: []
     };
   },
   methods: {
@@ -105,6 +105,9 @@ new Vue({
         autoHideDelay: 3000,
       });
     },
+    getViewed() {
+      return this.viewed;
+    }
   },
   render: (h) => h(App),
 }).$mount("#app");

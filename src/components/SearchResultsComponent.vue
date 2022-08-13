@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="query">
     <div v-if="this.recipes.length">
     <select @change="sortBy" v-model="sortParam" class="form-select" aria-label="Default select example">
       <option value=null >Sort By</option>
@@ -36,10 +36,6 @@ export default {
       query: ""
     }
   },
-  mounted() {
-    this.query = this.$route.params.query;
-    this.search();
-  },
   methods: {
     sortBy() {
       if(this.sortParam != null){
@@ -48,20 +44,21 @@ export default {
         })
       }
     },
-    async search() {
+    async search(params) {
       try {
+        this.query = params.query;
         let url = this.$root.store.server_domain + "/search?query=" + this.query;
-        if(this.$route.params.resultNumber != 5){
-          url += "&number=" + this.$route.params.resultNumber;
+        if(params.resultNumber != 5){
+          url += "&number=" + params.resultNumber;
         }
-        if(this.$route.params.cuisine != null){
-          url += "&cuisine=" + this.$route.params.cuisine;
+        if(params.cuisine != null){
+          url += "&cuisine=" + params.cuisine;
         }
-        if(this.$route.params.diet != null){
-          url += "&diets=" + this.$route.params.diet;
+        if(params.diet != null){
+          url += "&diets=" + params.diet;
         }
-        if(this.$route.params.intolerance != null){
-          url += "&intolerance=" + this.$route.params.intolerance;
+        if(params.intolerance != null){
+          url += "&intolerance=" + params.intolerance;
         }
         const response = await this.axios.get(
           url,

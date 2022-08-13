@@ -11,7 +11,31 @@
           <b-nav-item :to="{ name: 'main' }"> View Recipes </b-nav-item>
           <b-nav-item :to="{ name: 'search' }"> Search </b-nav-item>
           <!-- Whene Logged In -->
-          <b-nav-item v-if="$root.store.username" :to="{ name: 'createRecipe' }">Create Recipe</b-nav-item>
+          <b-nav-item v-if="$root.store.username" v-b-modal="'createModal'">Create Recipe</b-nav-item>
+          <b-modal 
+            headerBgVariant: dark
+            headerTextVariant: light
+            footerBgVariant: warning
+            size="xl" 
+            title="Create Recipe" 
+            id="createModal"
+            ref="createModal">
+            <CreateRecipe
+              ref="createRecipe"
+              @Created="Created()"
+            ></CreateRecipe>
+            <template #modal-footer="{ cancel }">
+              <b-button size="lg" variant="success" @click="$refs.createRecipe.onCreate()">
+                Create
+              </b-button>
+              <b-button size="lg" variant="danger" @click="$refs.createRecipe.Reset()">
+                Reset
+              </b-button>
+              <b-button size="lg" variant="outline-secondary" @click="cancel()">
+                Close
+              </b-button>
+            </template>
+          </b-modal>
         </b-navbar-nav> 
 
 
@@ -57,7 +81,9 @@
 </template>
 
 <script>
+import CreateRecipe from "./components/CreateRecipeComponent.vue";
 export default {
+  components: { CreateRecipe },
   name: "App",
   data() {
     return {
@@ -67,13 +93,13 @@ export default {
   methods: {
     search() {
       if(this.query.length){
-        if(this.$router.currentRoute.name === 'searchResults'){
+        if(this.$router.currentRoute.name === 'search'){
           this.$refs.link.query = this.query;
           this.$refs.link.search(); 
         }
         else{
             this.$router.push({
-            name: 'searchResults',
+            name: 'search',
             params: {
               query: this.query,
               resultNumber: 5 
@@ -83,6 +109,12 @@ export default {
         }
         this.query = "";
       }
+    },
+
+    Created(){
+        this.$refs.createModal.hide();
+        this.$bvModal.msgBoxOk('Recipe Created');
+
     },
 
     async Logout() {

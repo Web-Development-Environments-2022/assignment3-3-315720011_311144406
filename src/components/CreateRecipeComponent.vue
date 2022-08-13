@@ -1,7 +1,6 @@
 <template>
   <div class="container">
-    <h1 class="title">Create Your Own Recipe</h1>
-    <b-form @submit.prevent="onCreate" @reset.prevent="onReset">
+    <b-form>
         <b-form-group
             id="input-group-title"
             label-cols-sm="3"
@@ -132,9 +131,6 @@
                 <b-form-checkbox style="margin-right: 50px" id="gluten_free" v-model="$v.form.gluten_free.$model"> Gluten Free </b-form-checkbox>
             </div>
         </b-form-group>
-
-        <b-button type="reset" variant="danger" class="ml-5 w-25" >Reset</b-button>
-        <b-button type="submit" variant="primary"  class="ml-5 w-50" >Create</b-button>
         <b-alert
             class="mt-2"
             v-if="form.submitError"
@@ -145,12 +141,11 @@
             Creation failed: {{ form.submitError }}
         </b-alert>
     </b-form>
-
   </div>
 </template>
 
 <script>
-import ImageUploadPreview from '../components/ImageUploadPreview.vue';
+import ImageUploadPreview from './ImageUploadPreview.vue';
 import {
   required,
   maxLength,
@@ -158,7 +153,7 @@ import {
 } from "vuelidate/lib/validators";
 
 export default {
-  name: "Register",
+  name: "CreateRecipeComponent",
     components: {
         ImageUploadPreview
   },
@@ -255,6 +250,7 @@ export default {
             },
             {withCredentials: true},
         );
+        this.$emit('Created');
 
       } catch (err) {
         console.log(err.response);
@@ -268,7 +264,7 @@ export default {
       }
       this.Create();
     },
-    onReset() {
+    Reset() {
             this.form = {
             title: "",
             readyInMinutes: 5,

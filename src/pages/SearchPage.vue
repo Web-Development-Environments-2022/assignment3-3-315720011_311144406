@@ -81,7 +81,11 @@
         >Search</b-button>
     </b-form>
     
-  <b-container v-if="showResults()">
+    <SearchResultsComponent
+      ref="searchResults">
+
+    </SearchResultsComponent>
+  <!-- <b-container v-if="showResults()">
     <h3>
       Search Results:
     </h3>
@@ -95,7 +99,9 @@
           />
       </div>
     </div>
-  </b-container>
+  </b-container> -->
+
+
   </div>
 </template>
 
@@ -104,11 +110,11 @@ import cuisines from "../assets/cuisines";
 import diets from "../assets/diets";
 import intolerances from "../assets/intolerances";
 import required from "vuelidate/lib/validators";
-import RecipePreview from "../components/RecipePreview";
+import SearchResultsComponent from "../components/SearchResultsComponent";
 export default {
   name: "SearchPage",
   components: {
-    RecipePreview
+    SearchResultsComponent
   },
   data() {
     return {
@@ -125,7 +131,6 @@ export default {
       resultNumbersOptions: [],
       errors: [],
       validated: false,
-      recipes: []
     };
   },
   validations: {
@@ -144,26 +149,20 @@ export default {
   },
 
   methods: {
-    showResults(){
-      return this.recipes.length > 0;
-    },
 
     onSearch() {
       if(this.form.query === ""){
         return
       }
       else{
-        this.$router.push(
-          { 
-            name: 'searchResults',
-            params: {
-              query: this.form.query,
-              resultNumber: this.form.resultNumber,
-              cuisine: this.form.cuisine,
-              diet: this.form.diet,
-              intolerance: this.form.intolerance
-            }
-          });
+        const params = {
+          query: this.form.query,
+          resultNumber: this.form.resultNumber,
+          cuisine: this.form.cuisine,
+          diet: this.form.diet,
+          intolerance: this.form.intolerance
+        }
+        this.$refs.searchResults.search(params);
       }
     }
   }
