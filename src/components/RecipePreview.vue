@@ -20,9 +20,24 @@
           <p >Vegetarian: {{recipe.vegetarian | boolToYesNo}}</p>
           <p >Gluten Free: {{recipe.glutenFree | boolToYesNo}}</p>
           </li>
+          <div class="list-group list-group-flush" v-if="isPersonal">
+            <li class="list-group-item">
+              <p >Servings:
+              {{recipe.servings}}</p>  
+            </li>
+            <li class="list-group-item" >
+              <p >Ingredients: 
+              {{recipe.ingredients}}</p>  
+            </li>
+            <li class="list-group-item" >
+              <p >Instructions: 
+              {{recipe.instructions}}</p>  
+            </li>
+          </div>
         </ul>
-        <div class="card-footer" style="bottom=0">
+        <div class="card-footer" style="bottom=0" v-if="!isPersonal">
           <b-button 
+            
             class="card-link" 
             @click="showRecipe()" 
             type="submit"
@@ -64,6 +79,9 @@ export default {
     },
     isOnLastViewd: {
       type: Boolean
+    },
+    isPersonal: {
+      type: Boolean
     }
   },
 
@@ -74,7 +92,6 @@ export default {
   },
 
   methods: {
-
     async addToFavorites(favorited) {
       try {
         if(favorited){
@@ -104,7 +121,10 @@ export default {
     },
 
     showRecipe(){
-      this.$router.push({ name: 'recipe', params: { recipeId: this.recipe.id } });
+      if(!this.isPersonal){
+        this.$router.push({ name: 'recipe', params: { recipeId: this.recipe.id } });
+      }
+
     }
   },
   filters:{

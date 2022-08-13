@@ -5,10 +5,10 @@
     </h3>
     <b-card-group class="card-deck">
         <RecipePreview v-for="r in recipes" :key="r.id" 
-        class="recipePreview"
-        :showFavorite="showFavorite"
-        :isOnLastViewd="isOnLastViewd"
-        :recipe="r" />
+          class="recipePreview"
+          :showFavorite="showFavorite"
+          :isOnLastViewd="isOnLastViewd"
+          :recipe="r" />
     </b-card-group>
   </b-container>
 </template>

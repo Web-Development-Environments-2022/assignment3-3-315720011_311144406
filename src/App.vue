@@ -7,11 +7,12 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav >
-        <b-navbar-nav >
-          <b-nav-item :to="{ name: 'main' }"> View Recipes </b-nav-item>
-          <b-nav-item :to="{ name: 'search' }"> Search </b-nav-item>
+        <b-navbar-nav>
+          <b-nav-item class="navItem" :to="{ name: 'main' }"> View Recipes </b-nav-item>
+          <b-nav-item class="navItem" :to="{ name: 'search' }"> Search </b-nav-item>
+          <b-nav-item class="navItem" :to="{ name: 'familyRecipes' }"> Familiy Recipes </b-nav-item>
           <!-- Whene Logged In -->
-          <b-nav-item v-if="$root.store.username" v-b-modal="'createModal'">Create Recipe</b-nav-item>
+          <b-nav-item class="navItem" v-if="$root.store.username" v-b-modal="'createModal'">Create Recipe</b-nav-item>
           <b-modal 
             headerBgVariant: dark
             headerTextVariant: light
@@ -49,13 +50,13 @@
         <!-- Whene Logged Out -->
         <b-navbar-nav class="ml-auto" v-if="!$root.store.username">
           <b-navbar-brand >Guest</b-navbar-brand>
-          <b-nav-item  :to="{ name: 'register' }"> Register </b-nav-item>
-          <b-nav-item :to="{ name: 'login' }"> Login </b-nav-item>
+          <b-nav-item class="navItem" :to="{ name: 'register' }"> Register </b-nav-item>
+          <b-nav-item class="navItem" :to="{ name: 'login' }"> Login </b-nav-item>
         </b-navbar-nav>
 
         <!-- Whene Logged In -->
         <b-navbar-nav class="ml-auto" v-if="$root.store.username" right>
-          <b-nav-item-dropdown right>
+          <b-nav-item-dropdown class="navItem" right>
             <template #button-content>
               <em><b> {{ $root.store.username }}</b></em>
             </template>
@@ -68,7 +69,7 @@
         </b-navbar-nav>
 
         <b-navbar-nav right v-if="$root.store.username">
-          <b-nav-item  :to="{ name: 'about' } "> About </b-nav-item>
+          <b-nav-item class="navItem" :to="{ name: 'about' } "> About </b-nav-item>
         </b-navbar-nav>
 
 
@@ -149,6 +150,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #021425;
   min-height: 100vh;
+}
+
+.navItem{
+  margin-left: 0.8vw;
+  margin-right: 0.8vw;
 }
 
 

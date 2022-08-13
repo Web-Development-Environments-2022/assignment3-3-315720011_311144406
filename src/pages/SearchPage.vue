@@ -82,24 +82,7 @@
     </b-form>
     
     <SearchResultsComponent
-      ref="searchResults">
-
-    </SearchResultsComponent>
-  <!-- <b-container v-if="showResults()">
-    <h3>
-      Search Results:
-    </h3>
-
-    <div class="row row-cols-1 row-cols-md-2">
-      <div class="col mb-4" v-for="r in recipes" :key="r.id">
-          <RecipePreview 
-            class="recipePreview" 
-            :recipe="r"
-            :showFavorite="showFavorite" 
-          />
-      </div>
-    </div>
-  </b-container> -->
+      ref="searchResults"/>
 
 
   </div>

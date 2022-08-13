@@ -1,12 +1,14 @@
 <template>
   <div class="container">
     <h1 class="title">My Recipes</h1>
-    <div v-if="recipesExist">
-        <RecipePreviewList 
-          title="My Recipes" 
-          class="MyRecipes center"
-          ref="recipesList"
-        />
+    <div class="row row-cols-1 row-cols-md-2 myRecipes" v-if="recipesExist">
+      <div class="col mb-4" v-for="r in recipes" :key="r.id">
+          <RecipePreview 
+            class="recipePreview" 
+            :recipe="r" 
+            isPersonal
+          />
+      </div>
     </div>
     <div v-else>
         <h2 class="title">You haven't liked any recipes yet, look around and find some</h2>
@@ -15,14 +17,15 @@
 </template>
 
 <script>
-import RecipePreviewList from "../components/RecipePreviewList";
+import RecipePreview from "../components/RecipePreview";
 export default {
   components: {
-    RecipePreviewList
+    RecipePreview
   },
   data() {
     return {
-        recipesExist: false
+        recipesExist: false,
+        recipes: []
     }
   },
   mounted() {
@@ -38,12 +41,8 @@ export default {
 
         const myRecipes = response.data;
         if(myRecipes && myRecipes.length > 0){
+            this.recipes.push(...myRecipes);
             this.recipesExist = true;
-            let recipes = [];
-            recipes.push(...myRecipes);
-            this.$nextTick(() => {
-                this.$refs.recipesList.updateRecipes(recipes);
-            });
         }
         else{
             this.recipesExist = false;
@@ -58,7 +57,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.title{
+  line-height: 20vh;
+  text-align: center;
+  font-weight: bold;
+}
 .MyRecipes {
+  position: relative;
   margin: 10px 0 10px;
 }
 .blur {
