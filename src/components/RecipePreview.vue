@@ -14,24 +14,29 @@
       <div v-if="!isOnLastViewd">
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Cooking Time: {{recipe.readyInMinutes}}</li>
-          <li class="list-group-item">Popularity: {{recipe.popularity}}</li>
+          <li class="list-group-item"  v-if="!isPersonal" >Popularity: {{recipe.popularity}}</li>
           <li class="list-group-item">
-          <p >Vegan: {{recipe.vegan | boolToYesNo}}</p>  
-          <p >Vegetarian: {{recipe.vegetarian | boolToYesNo}}</p>
-          <p >Gluten Free: {{recipe.glutenFree | boolToYesNo}}</p>
+            <p >Vegan: {{recipe.vegan | boolToYesNo}}</p>  
+            <p >Vegetarian: {{recipe.vegetarian | boolToYesNo}}</p>
+            <p >Gluten Free: {{recipe.glutenFree | boolToYesNo}}</p>
           </li>
           <div class="list-group list-group-flush" v-if="isPersonal">
             <li class="list-group-item">
               <p >Servings:
-              {{recipe.servings}}</p>  
+                {{recipe.servings}}
+              </p>  
             </li>
             <li class="list-group-item" >
-              <p >Ingredients: 
-              {{recipe.ingredients}}</p>  
+              <h5 >Ingredients:</h5>
+                <p v-for="(r, index) in recipe.ingredientsNameAmount" :key="index + '_' + r.id">
+                  {{ r.amount }} {{ r.name}}
+                </p>
             </li>
             <li class="list-group-item" >
-              <p >Instructions: 
-              {{recipe.instructions}}</p>  
+              <h5 >Instructions: </h5>
+              <p v-for="(r, index) in recipe.instructions.split('\n')" :key="index + '_' + r.id">
+                {{r}}
+              </p>  
             </li>
           </div>
         </ul>
@@ -144,10 +149,13 @@ export default {
 </script>
 
 <style scoped>
+
 .myCard{
   padding: 0px;
   margin-left: 0px;
   margin-right: 0px;
+  color: black;
+  background-color:aliceblue
 }
 
 .myTitle{

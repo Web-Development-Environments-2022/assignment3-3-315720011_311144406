@@ -20,15 +20,15 @@
                 </li>
               </ul>
             </div>
-            Ingredients:
-            <ul>
-              <li
-                v-for="(r, index) in recipe.extendedIngredients"
-                :key="index + '_' + r.id"
-              >
-                {{ r.original }}
-              </li>
-            </ul>
+              Ingredients:
+              <ul>
+                <li
+                  v-for="(r, index) in recipe.extendedIngredients"
+                  :key="index + '_' + r.id"
+                >
+                  {{ r.original }}
+                </li>
+              </ul>
           </div>
           <div class="wrapped">
             Instructions:
@@ -40,11 +40,6 @@
           </div>
         </div>
       </div>
-      <!-- <pre>
-      {{ $route.params }}
-      {{ recipe }}
-    </pre
-      > -->
     </div>
   </div>
 </template>
@@ -122,11 +117,20 @@ export default {
 </script>
 
 <style scoped>
+.list-group{
+  color: black;
+}
+
 .wrapper {
   display: flex;
+  background-color: aliceblue;
+  color: black;
+  border-radius: 5%;
 }
+
 .wrapped {
   width: 50%;
+  padding: 3%;
 }
 .center {
   display: block;

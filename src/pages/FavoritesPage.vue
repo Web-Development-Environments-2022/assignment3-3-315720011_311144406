@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <h1 class="title">My Favorites</h1>
     <div v-if="recipesExist">
         <RecipePreviewList 
           title="My Favorites" 

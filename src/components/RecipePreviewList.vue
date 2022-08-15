@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container class=PreviewList>
     <h3 class="title">
       {{ titleExsits }}:
     </h3>
@@ -56,7 +56,7 @@ export default {
 
 <style lang="scss" scoped>
   .title{
-    padding: 4%;
+    padding: 2%;
     position: relative;
     left: 30%;
   }

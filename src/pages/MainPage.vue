@@ -4,10 +4,10 @@
     <b-col cols=7>
 
       <RecipePreviewList 
-      title="Random Recipes" 
-      :showFavorite ="$root.store.username != null"
-      class="RandomRecipes center" 
-      ref="recipesList" />
+        title="Random Recipes" 
+        :showFavorite ="$root.store.username != null"
+        class="RandomRecipes center" 
+        ref="recipesList" />
 
       <b-button 
         pill variant="primary"

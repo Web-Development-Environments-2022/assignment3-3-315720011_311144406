@@ -78,6 +78,7 @@ export default {
 
 <style lang="scss" scoped>
 .Recipes {
+  color: black;
   margin: 10px 0 10px;
 }
 </style>

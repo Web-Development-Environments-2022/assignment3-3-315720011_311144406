@@ -1,6 +1,10 @@
 <template>
-  <div id="app">
-
+  <div 
+    id="app" 
+    :style="{
+      'background-image': `url(${BackGround})`,
+      'background-size': '100%',
+    }">
     <b-navbar toggleable="lg" type="dark" variant="info">
       <b-navbar-brand>Eat Well</b-navbar-brand>
 
@@ -83,12 +87,14 @@
 
 <script>
 import CreateRecipe from "./components/CreateRecipeComponent.vue";
+import BackGround from "./assets/BackGround.png"
 export default {
   components: { CreateRecipe },
   name: "App",
   data() {
     return {
-      query: ""
+      query: "",
+      BackGround: BackGround
     }
   },
   methods: {
@@ -148,7 +154,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #021425;
+  color: #ffffff;
   min-height: 100vh;
 }
 
