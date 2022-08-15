@@ -1,27 +1,33 @@
 <template>
   <div class="container">
-    <div v-if="recipesExist">
-        <RecipePreviewList 
-          title="My Favorites" 
-          class="MyFavorites center" 
-          ref="recipesList"
-        />
+    <h1 class="title">My Favorites</h1>
+    <div class="row row-cols-1 row-cols-md-2 myRecipes" v-if="!recipesNotExist">
+      <div class="col mb-4" v-for="r in recipes" :key="r.id">
+          <RecipePreview 
+            class="recipePreview" 
+            :recipe="r" 
+            showFavorite
+          />
+      </div>
     </div>
     <div v-else>
-        <h2 class="title">You haven't liked any recipes yet, look around and find some</h2>
+        <h2 class="title" v-if="recipesNotExist">You haven't liked any recipes yet, look around and find some</h2>
     </div>
+
+
   </div>
 </template>
 
 <script>
-import RecipePreviewList from "../components/RecipePreviewList";
+import RecipePreview from "../components/RecipePreview";
 export default {
   components: {
-    RecipePreviewList
+    RecipePreview
   },
   data() {
     return {
-        recipesExist: false
+        recipesNotExist: false,
+        recipes: []
     }
   },
   mounted() {
@@ -34,18 +40,13 @@ export default {
           this.$root.store.server_domain + "/users/favorites",
           {withCredentials: true},
         );
-
         const favoriteRecipes = response.data;
         if(favoriteRecipes && favoriteRecipes.length > 0){
-            this.recipesExist = true;
-            let recipes = [];
-            recipes.push(...favoriteRecipes);
-            this.$nextTick(() => {
-                this.$refs.recipesList.updateRecipes(recipes);
-            });
+            this.recipesNotExist = false;
+            this.recipes.push(...favoriteRecipes);
         }
         else{
-            this.recipesExist = false;
+            this.recipesNotExist = true;
         }
 
       } catch (error) {

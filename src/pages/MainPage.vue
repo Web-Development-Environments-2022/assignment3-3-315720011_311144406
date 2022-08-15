@@ -69,7 +69,7 @@ export default {
         //last viewed
         if(this.$root.store.username && this.$root.viewed && this.$root.viewed.length > 0){
           const ViewedRecipesIds = await JSON.parse(JSON.stringify(this.$root.viewed));
-          const lastThreeRecipesIds = ViewedRecipesIds.splice(-3);
+          const lastThreeRecipesIds = ViewedRecipesIds.slice(-3);
 
           response = await this.axios.post(
             this.$root.store.server_domain + "/users/viewed",

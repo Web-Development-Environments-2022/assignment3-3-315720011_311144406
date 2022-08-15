@@ -159,7 +159,7 @@ export default {
 }
 
 .myTitle{
-  height: 10vh;
+  height: 15vh;
   padding: 2vh;
   padding-left: 1vh ;
   padding-right: 1vh ;

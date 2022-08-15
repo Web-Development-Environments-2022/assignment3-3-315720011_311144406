@@ -62,7 +62,6 @@ export default {
           {withCredentials: true},
         );
 
-        // console.log("response.status", response.status);
         if (response.status !== 200) this.$router.replace("/NotFound");
       } catch (error) {
         console.log("error.response.status", error.response.status);
@@ -103,7 +102,9 @@ export default {
       };
 
       this.recipe = _recipe;
-      this.$root.viewed.push(this.recipe.id);
+      if(!this.$root.viewed.slice(-3).includes(this.recipe.id)){
+        this.$root.viewed.push(this.recipe.id);
+      }
     } catch (error) {
       console.log(error);
     }
