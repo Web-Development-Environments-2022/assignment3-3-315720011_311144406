@@ -147,6 +147,11 @@ export default {
         }
         this.$refs.searchResults.search(params);
       }
+    },
+
+    onSmallSearch(query){
+      this.form.query = query;
+      this.onSearch();
     }
   }
 };

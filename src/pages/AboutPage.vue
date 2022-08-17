@@ -29,12 +29,6 @@
 
 <script>
 export default {
-  mounted() {
-    this.updateRecipes();
-  },
-  methods: {
-
-  },
 };
 
 </script>

@@ -98,14 +98,13 @@ export default {
     }
   },
   methods: {
-    search() {
+    async search() {
       if(this.query.length){
         if(this.$router.currentRoute.name === 'search'){
-          this.$refs.link.query = this.query;
-          this.$refs.link.search(); 
+          this.$refs.link.onSmallSearch(this.query); 
         }
         else{
-            this.$router.push({
+            await this.$router.push({
             name: 'search',
             params: {
               query: this.query,
@@ -114,7 +113,7 @@ export default {
             replace: true
             });
         }
-        this.query = "";
+        this.$refs.link.onSmallSearch(this.query);
       }
     },
 

@@ -28,7 +28,7 @@
             </li>
             <li class="list-group-item" >
               <h5 >Ingredients:</h5>
-                <p v-for="(r, index) in recipe.ingredientsNameAmount" :key="index + '_' + r.id">
+                <p v-for="(r, index) in recipe.ingredients" :key="index + '_' + r.id">
                   {{ r.amount }} {{ r.name}}
                 </p>
             </li>
