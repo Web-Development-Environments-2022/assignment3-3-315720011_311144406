@@ -2,18 +2,4 @@
 
 
 
-# TODO:
-
-favorite fix like change between watched and random
-
-css watched recipes
-
-css recipes
-
-My Recipes:
-- fix images saving (maybe)
-
-Familiy Recipes:
-- create the recipies
-- show them regulary 
-- a little css
+DONE
