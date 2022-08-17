@@ -26,6 +26,52 @@
       </b-form-group>
 
       <b-form-group
+        id="input-group-firstname"
+        label-cols-sm="3"
+        label="First Name:"
+        label-for="firstname"
+      >
+        <b-form-input
+          id="firstname"
+          v-model="$v.form.firstName.$model"
+          type="text"
+          :state="validateState('firstName')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.firstName.required">
+          First Name is required
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-else-if="!$v.form.firstName.length">
+          First Name length should be between 1-30 characters long
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-if="!$v.form.firstName.alpha">
+          First Name alpha
+        </b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-form-group
+        id="input-group-lastname"
+        label-cols-sm="3"
+        label="Last Name:"
+        label-for="lastname"
+      >
+      <b-form-input
+          id="lastname"
+          v-model="$v.form.lastName.$model"
+          type="text"
+          :state="validateState('lastName')"
+        ></b-form-input>
+        <b-form-invalid-feedback v-if="!$v.form.lastName.required">
+          Last Name is required
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-else-if="!$v.form.lastName.length">
+          Last Name length should be between 1-30 characters long
+        </b-form-invalid-feedback>
+        <b-form-invalid-feedback v-if="!$v.form.lastName.alpha">
+          Last Name alpha
+        </b-form-invalid-feedback>
+      </b-form-group>
+
+      <b-form-group
         id="input-group-country"
         label-cols-sm="3"
         label="Country:"
@@ -179,12 +225,12 @@ export default {
       },
       firstName: {
         required,
-        length: (u) => minLength(1)(u) && maxLength(30)(u),
+        maxLength: maxLength(30),
         alpha
       },
       lastName: {
         required,
-        length: (u) => minLength(1)(u) && maxLength(30)(u),
+        maxLength: maxLength(30),
         alpha
       },
       country: {
@@ -220,7 +266,10 @@ export default {
           {
             username: this.form.username,
             password: this.form.password,
+            firstName: this.form.firstName,
+            lastName: this.form.lastName,
             country: this.form.country,
+            email: this.form.email
           },
           {withCredentials: true}
         );

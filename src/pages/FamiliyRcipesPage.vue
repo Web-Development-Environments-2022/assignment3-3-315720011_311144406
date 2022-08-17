@@ -61,7 +61,7 @@ export default {
     this.recipes.push(recipe1);
 
     const recipe2 = {
-      title: "sviche ",
+      title: "Sviche ",
       readyInMinutes: 30,
       popularity: 0,
       vegan: false,
